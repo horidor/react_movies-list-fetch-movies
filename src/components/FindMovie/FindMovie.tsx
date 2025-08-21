@@ -5,18 +5,19 @@ import cn from 'classnames';
 import { MovieCard } from '../MovieCard';
 import { getMovie } from '../../api';
 import { MovieData } from '../../types/MovieData';
+import { ResponseError } from '../../types/ReponseError';
 
 type Props = {
   handleNewMovie?: (movie: Movie) => void;
 }
 
-function isMovieData(obj: any): obj is MovieData {
+function isMovieData(obj: ResponseError | MovieData): obj is MovieData {
   return (
     obj &&
-    typeof obj.Poster === "string" &&
-    typeof obj.Title === "string" &&
-    typeof obj.Plot === "string" &&
-    typeof obj.imdbID === "string"
+    "Poster" in obj &&
+    "Title" in obj &&
+    "Plot" in obj &&
+    "imdbID" in obj
   );
 }
 
@@ -64,8 +65,8 @@ export const FindMovie: React.FC<Props> = ({ handleNewMovie = () => {} }) => {
       .finally(() => setLoading(false));
   }
 
-  const handleAddMovie = (movie: Movie) => {
-    handleNewMovie(movie);
+  const handleAddMovie = (newMovie: Movie) => {
+    handleNewMovie(newMovie);
     setMovie(null);
   }
 
