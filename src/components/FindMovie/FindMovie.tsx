@@ -45,8 +45,6 @@ export const FindMovie: React.FC<Props> = ({ handleNewMovie = () => {} }) => {
           throw new Error();
         }
 
-        console.log(rawData);
-
         const moviePoster = rawData.Poster === 'N/A'
           ? 'https://via.placeholder.com/360x270.png?text=no%20preview'
           : rawData.Poster;
