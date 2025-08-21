@@ -14,10 +14,10 @@ type Props = {
 function isMovieData(obj: ResponseError | MovieData): obj is MovieData {
   return (
     obj &&
-    "Poster" in obj &&
-    "Title" in obj &&
-    "Plot" in obj &&
-    "imdbID" in obj
+    (obj as MovieData).Poster !== undefined &&
+    (obj as MovieData).Title !== undefined &&
+    (obj as MovieData).Plot !== undefined &&
+    (obj as MovieData).imdbID !== undefined
   );
 }
 
@@ -44,6 +44,8 @@ export const FindMovie: React.FC<Props> = ({ handleNewMovie = () => {} }) => {
         if (!isMovieData(rawData)) {
           throw new Error();
         }
+
+        console.log(rawData);
 
         const moviePoster = rawData.Poster === 'N/A'
           ? 'https://via.placeholder.com/360x270.png?text=no%20preview'
